@@ -1,50 +1,68 @@
 import { motion } from "framer-motion";
+import { Zap, Brain, LineChart, Cog } from "lucide-react";
 
 const points = [
-  "Data flows automatically",
-  "AI analyzes performance",
-  "Insights are generated instantly",
-  "Decisions are automated",
+  { text: "Data flows automatically", icon: Zap },
+  { text: "AI analyzes performance", icon: Brain },
+  { text: "Insights are generated instantly", icon: LineChart },
+  { text: "Decisions are automated", icon: Cog },
 ];
 
 const PhilosophySection = () => (
-  <section className="py-32 relative">
-    <div className="absolute inset-0 grid-bg opacity-20" />
-    <div className="container mx-auto px-6 relative z-10 max-w-3xl text-center">
+  <section className="py-32 relative overflow-hidden">
+    <div className="absolute inset-0 grid-bg opacity-15" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[150px]" />
+    
+    <div className="container mx-auto px-6 relative z-10 max-w-4xl text-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold font-heading mb-2">
+        <span className="inline-block px-4 py-1.5 text-xs font-medium tracking-wider uppercase rounded-full border border-secondary/30 bg-secondary/5 text-secondary mb-8">
+          Philosophy
+        </span>
+        
+        <h2 className="text-4xl md:text-6xl font-bold font-heading mb-2 leading-tight">
           I Don't Build Websites.
         </h2>
-        <h2 className="text-4xl md:text-5xl font-bold font-heading gradient-text mb-8">
+        <h2 className="text-4xl md:text-6xl font-bold font-heading gradient-text mb-10 leading-tight">
           I Build Intelligent Systems.
         </h2>
-        <p className="text-muted-foreground text-lg leading-relaxed mb-10">
+        
+        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-14 max-w-2xl mx-auto">
           Modern businesses don't just need software — they need intelligence layers. My work focuses on building systems where:
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-10">
-          {points.map((point, i) => (
-            <motion.div
-              key={point}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-card p-4 text-sm text-foreground/80 flex items-center gap-3"
-            >
-              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent shrink-0" />
-              {point}
-            </motion.div>
-          ))}
+        <div className="grid sm:grid-cols-2 gap-5 mb-14">
+          {points.map((point, i) => {
+            const Icon = point.icon;
+            return (
+              <motion.div
+                key={point.text}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group glass-card p-5 text-left flex items-center gap-4 hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_-10px_hsl(220,100%,65%,0.15)]"
+              >
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/15 to-secondary/10 border border-border/40 flex items-center justify-center shrink-0 group-hover:border-primary/30 transition-colors">
+                  <Icon className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm text-foreground/80 font-medium">{point.text}</span>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <p className="text-muted-foreground italic">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-muted-foreground text-lg italic border-l-2 border-primary/30 pl-6 text-left max-w-xl mx-auto"
+        >
           The result is software that doesn't just show data — it thinks and acts.
-        </p>
+        </motion.p>
       </motion.div>
     </div>
   </section>

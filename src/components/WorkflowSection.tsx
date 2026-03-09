@@ -1,16 +1,19 @@
 import { motion } from "framer-motion";
+import { Radio, Cog, Brain, Lightbulb, Rocket } from "lucide-react";
 
 const steps = [
-  { label: "Data Source", sub: "Meta Ads API", icon: "📡" },
-  { label: "AI Processing", sub: "Data Pipeline", icon: "⚙️" },
-  { label: "Decision Engine", sub: "AI Analysis", icon: "🧠" },
-  { label: "Insights", sub: "Pattern Detection", icon: "💡" },
-  { label: "Automation", sub: "Action & Reports", icon: "🚀" },
+  { label: "Data Source", sub: "Meta Ads API", icon: Radio },
+  { label: "AI Processing", sub: "Data Pipeline", icon: Cog },
+  { label: "Decision Engine", sub: "AI Analysis", icon: Brain },
+  { label: "Insights", sub: "Pattern Detection", icon: Lightbulb },
+  { label: "Automation", sub: "Action & Reports", icon: Rocket },
 ];
 
 const WorkflowSection = () => (
   <section id="workflow" className="py-32 relative overflow-hidden">
-    <div className="absolute inset-0 grid-bg opacity-20" />
+    <div className="absolute inset-0 grid-bg opacity-15" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-secondary/5 rounded-full blur-[150px]" />
+    
     <div className="container mx-auto px-6 relative z-10">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -18,34 +21,51 @@ const WorkflowSection = () => (
         viewport={{ once: true }}
         className="text-center mb-20"
       >
-        <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+        <span className="inline-block px-4 py-1.5 text-xs font-medium tracking-wider uppercase rounded-full border border-secondary/30 bg-secondary/5 text-secondary mb-6">
+          System Architecture
+        </span>
+        <h2 className="text-4xl md:text-6xl font-bold font-heading mb-4">
           How AI <span className="gradient-text">Systems Work</span>
         </h2>
-        <p className="text-muted-foreground max-w-md mx-auto">
+        <p className="text-muted-foreground max-w-lg mx-auto text-lg">
           From raw data to automated decisions — end to end.
         </p>
       </motion.div>
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
-        {steps.map((step, i) => (
-          <motion.div
-            key={step.label}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="flex items-center"
-          >
-            <div className="glass-card gradient-border p-6 text-center w-44 hover:glow-primary transition-shadow duration-300">
-              <div className="text-3xl mb-3">{step.icon}</div>
-              <div className="text-sm font-bold font-heading mb-1">{step.label}</div>
-              <div className="text-[10px] text-muted-foreground">{step.sub}</div>
-            </div>
-            {i < steps.length - 1 && (
-              <div className="hidden md:block w-8 h-px bg-gradient-to-r from-primary/50 to-secondary/50 mx-1" />
-            )}
-          </motion.div>
-        ))}
+        {steps.map((step, i) => {
+          const Icon = step.icon;
+          return (
+            <motion.div
+              key={step.label}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.12 }}
+              className="flex items-center"
+            >
+              <div className="group glass-card gradient-border p-6 text-center w-48 hover:shadow-[0_0_40px_-10px_hsl(220,100%,65%,0.3)] transition-all duration-500">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/10 border border-border/40 flex items-center justify-center mx-auto mb-4 group-hover:border-primary/40 transition-colors">
+                  <Icon className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-sm font-bold font-heading mb-1">{step.label}</div>
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{step.sub}</div>
+              </div>
+              {i < steps.length - 1 && (
+                <div className="hidden md:flex items-center mx-2">
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.3 + i * 0.12 }}
+                    className="w-10 h-px bg-gradient-to-r from-primary/50 to-secondary/50 origin-left"
+                  />
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/50 -ml-0.5" />
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   </section>

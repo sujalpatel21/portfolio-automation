@@ -30,9 +30,19 @@ const Index = () => {
       <ContactSection />
 
       {/* Footer */}
-      <footer className="border-t border-border/30 py-8">
-        <div className="container mx-auto px-6 text-center text-xs text-muted-foreground">
-          © 2026 Sujal Patel. Building intelligent systems.
+      <footer className="border-t border-border/20 py-10">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <span className="font-heading font-bold text-lg gradient-text">SP</span>
+          <div className="text-xs text-muted-foreground">
+            © 2026 Sujal Patel. Building intelligent systems.
+          </div>
+          <div className="flex gap-6">
+            {["Email", "LinkedIn", "GitHub"].map((link) => (
+              <a key={link} href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                {link}
+              </a>
+            ))}
+          </div>
         </div>
       </footer>
     </div>
