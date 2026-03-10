@@ -1,25 +1,30 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Bot, Workflow, BarChart3, Link2, LineChart, Lightbulb, Layers, Cpu } from "lucide-react";
+import { Bot, Workflow, Mic, Database, Brain, Link2, Layers, Cpu, BookOpen, Zap } from "lucide-react";
 
 const nodes = [
   { id: "center", label: "AI Automation\nSystems", x: 50, y: 50, size: 140, description: "", icon: Cpu },
-  { id: "agents", label: "AI Agents", x: 38, y: 14, size: 100, description: "Autonomous decision-making systems that analyze data and generate insights in real-time.", icon: Bot },
-  { id: "pipelines", label: "Automation\nPipelines", x: 72, y: 12, size: 100, description: "Systems that fetch, process, and analyze marketing data automatically.", icon: Workflow },
-  { id: "marketing", label: "Marketing\nIntelligence", x: 85, y: 45, size: 96, description: "AI-powered analytics for campaign performance and optimization.", icon: BarChart3 },
-  { id: "api", label: "API\nIntegrations", x: 78, y: 80, size: 96, description: "Seamless connections between platforms, APIs, and data sources.", icon: Link2 },
-  { id: "analytics", label: "Data\nAnalytics", x: 50, y: 88, size: 96, description: "Real-time data processing and visualization for actionable insights.", icon: LineChart },
-  { id: "recommendations", label: "AI\nRecommendations", x: 18, y: 78, size: 96, description: "Machine learning models that generate optimization strategies.", icon: Lightbulb },
-  { id: "orchestration", label: "Workflow\nOrchestration", x: 14, y: 42, size: 96, description: "Coordinating complex multi-step AI workflows end-to-end.", icon: Layers },
+  { id: "llm", label: "LLM\nModels", x: 50, y: 12, size: 100, description: "Large language models powering reasoning, generation, and intelligent decision-making across all AI systems.", icon: Brain },
+  { id: "agents", label: "AI\nAgents", x: 82, y: 22, size: 100, description: "Autonomous agents that perceive, reason, and act — handling complex multi-step tasks without human intervention.", icon: Bot },
+  { id: "orchestration", label: "Workflow\nOrchestration", x: 90, y: 55, size: 96, description: "Coordinating complex multi-step AI workflows, managing agent handoffs and pipeline execution end-to-end.", icon: Layers },
+  { id: "pipelines", label: "Automation\nPipelines", x: 78, y: 82, size: 96, description: "Automated data processing and task execution pipelines that run continuously without manual intervention.", icon: Workflow },
+  { id: "voice", label: "Voice AI\nSystems", x: 50, y: 90, size: 100, description: "AI agents capable of real-time speech interaction, voice recognition, and natural language conversation.", icon: Mic },
+  { id: "rag", label: "RAG Knowledge\nSystems", x: 22, y: 82, size: 96, description: "Retrieval-augmented generation systems connecting AI models to custom knowledge bases for accurate, contextual responses.", icon: BookOpen },
+  { id: "api", label: "API\nIntegrations", x: 10, y: 55, size: 96, description: "Seamless connections between platforms, APIs, and data sources enabling AI systems to interact with external services.", icon: Link2 },
+  { id: "data", label: "Data\nIntelligence", x: 18, y: 22, size: 96, description: "Real-time data processing, analytics, and intelligence extraction from structured and unstructured data sources.", icon: Database },
+  { id: "realtime", label: "Real-time\nAI", x: 50, y: 50, size: 0, description: "", icon: Zap }, // hidden helper
 ];
 
+// Remove the hidden helper and use only visible nodes
+const visibleNodes = nodes.filter(n => n.size > 0);
+
 const connections = [
-  ["center", "agents"], ["center", "pipelines"], ["center", "marketing"],
-  ["center", "api"], ["center", "analytics"], ["center", "recommendations"],
-  ["center", "orchestration"],
-  ["agents", "pipelines"], ["marketing", "api"], ["api", "analytics"],
-  ["analytics", "recommendations"], ["recommendations", "orchestration"],
-  ["orchestration", "agents"],
+  ["center", "llm"], ["center", "agents"], ["center", "orchestration"],
+  ["center", "pipelines"], ["center", "voice"], ["center", "rag"],
+  ["center", "api"], ["center", "data"],
+  ["llm", "agents"], ["agents", "orchestration"], ["orchestration", "pipelines"],
+  ["pipelines", "voice"], ["voice", "rag"], ["rag", "api"],
+  ["api", "data"], ["data", "llm"],
 ];
 
 const SkillEcosystem = () => {
@@ -28,8 +33,6 @@ const SkillEcosystem = () => {
   return (
     <section id="ecosystem" className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-20" />
-      
-      {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-6 relative z-10">
@@ -46,7 +49,7 @@ const SkillEcosystem = () => {
             AI <span className="gradient-text">Ecosystem</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-lg">
-            An interconnected system of AI capabilities working together to power intelligent automation.
+            An interconnected system of AI capabilities — from LLMs and agents to voice AI and knowledge systems.
           </p>
         </motion.div>
 
@@ -57,11 +60,9 @@ const SkillEcosystem = () => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative max-w-4xl mx-auto aspect-square"
         >
-          {/* Orbital rings */}
           <div className="absolute inset-[15%] rounded-full border border-border/20" />
           <div className="absolute inset-[30%] rounded-full border border-border/10" />
 
-          {/* SVG connections */}
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
             <defs>
               <linearGradient id="conn-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -74,8 +75,9 @@ const SkillEcosystem = () => {
               </linearGradient>
             </defs>
             {connections.map(([from, to], i) => {
-              const a = nodes.find((n) => n.id === from)!;
-              const b = nodes.find((n) => n.id === to)!;
+              const a = visibleNodes.find((n) => n.id === from);
+              const b = visibleNodes.find((n) => n.id === to);
+              if (!a || !b) return null;
               const isHighlighted = hoveredNode === from || hoveredNode === to;
               return (
                 <line
@@ -90,8 +92,7 @@ const SkillEcosystem = () => {
             })}
           </svg>
 
-          {/* Nodes */}
-          {nodes.map((node) => {
+          {visibleNodes.map((node) => {
             const Icon = node.icon;
             const isCenter = node.id === "center";
             const isHovered = hoveredNode === node.id;
@@ -131,7 +132,6 @@ const SkillEcosystem = () => {
                   </span>
                 </motion.div>
 
-                {/* Hover pulse ring */}
                 {isHovered && (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0.6 }}
@@ -141,7 +141,6 @@ const SkillEcosystem = () => {
                   />
                 )}
 
-                {/* Tooltip */}
                 <AnimatePresence>
                   {node.description && isHovered && (
                     <motion.div
