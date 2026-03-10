@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Zap, Brain, LineChart, Cog } from "lucide-react";
+import { Zap, Brain, Cog, Bot } from "lucide-react";
 
 const points = [
   { text: "AI agents perform tasks autonomously", icon: Bot },
@@ -7,8 +7,6 @@ const points = [
   { text: "Systems reason, decide, and act", icon: Brain },
   { text: "Workflows run without human intervention", icon: Cog },
 ];
-
-import { Bot } from "lucide-react";
 
 const PhilosophySection = () => (
   <section className="py-32 relative overflow-hidden">
