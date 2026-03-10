@@ -2,11 +2,13 @@ import { motion } from "framer-motion";
 import { Zap, Brain, LineChart, Cog } from "lucide-react";
 
 const points = [
-  { text: "Data flows automatically", icon: Zap },
-  { text: "AI analyzes performance", icon: Brain },
-  { text: "Insights are generated instantly", icon: LineChart },
-  { text: "Decisions are automated", icon: Cog },
+  { text: "AI agents perform tasks autonomously", icon: Bot },
+  { text: "Data flows through intelligent pipelines", icon: Zap },
+  { text: "Systems reason, decide, and act", icon: Brain },
+  { text: "Workflows run without human intervention", icon: Cog },
 ];
+
+import { Bot } from "lucide-react";
 
 const PhilosophySection = () => (
   <section className="py-32 relative overflow-hidden">
@@ -24,14 +26,14 @@ const PhilosophySection = () => (
         </span>
         
         <h2 className="text-4xl md:text-6xl font-bold font-heading mb-2 leading-tight">
-          I Don't Build Websites.
+          I Don't Build Software.
         </h2>
         <h2 className="text-4xl md:text-6xl font-bold font-heading gradient-text mb-10 leading-tight">
-          I Build Intelligent Systems.
+          I Build Autonomous Systems.
         </h2>
         
         <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-14 max-w-2xl mx-auto">
-          Modern businesses don't just need software — they need intelligence layers. My work focuses on building systems where:
+          Modern businesses don't just need tools — they need intelligence layers. AI systems where agents reason, pipelines execute, and workflows run autonomously across every domain.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-5 mb-14">
@@ -61,7 +63,7 @@ const PhilosophySection = () => (
           viewport={{ once: true }}
           className="text-muted-foreground text-lg italic border-l-2 border-primary/30 pl-6 text-left max-w-xl mx-auto"
         >
-          The result is software that doesn't just show data — it thinks and acts.
+          The result is AI that doesn't just assist — it performs, decides, and automates.
         </motion.p>
       </motion.div>
     </div>

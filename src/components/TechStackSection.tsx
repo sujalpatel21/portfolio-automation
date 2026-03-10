@@ -1,18 +1,23 @@
 import { motion } from "framer-motion";
 
 const techs = [
-  { name: "AI Models", tier: 1 },
+  { name: "LLM Models", tier: 1 },
   { name: "Claude AI", tier: 1 },
-  { name: "OpenAI APIs", tier: 1 },
-  { name: "Meta Marketing API", tier: 2 },
-  { name: "Supabase", tier: 2 },
+  { name: "OpenAI", tier: 1 },
+  { name: "AI Agents", tier: 1 },
+  { name: "RAG Systems", tier: 1 },
+  { name: "Vector Databases", tier: 2 },
+  { name: "Automation Pipelines", tier: 1 },
+  { name: "Workflow Orchestration", tier: 2 },
+  { name: "Voice AI", tier: 1 },
+  { name: "API Integrations", tier: 2 },
+  { name: "Data Pipelines", tier: 2 },
   { name: "JavaScript", tier: 3 },
   { name: "Node.js", tier: 2 },
-  { name: "React", tier: 2 },
-  { name: "API Integrations", tier: 3 },
-  { name: "Data Analytics", tier: 1 },
-  { name: "Automation Pipelines", tier: 1 },
+  { name: "React", tier: 3 },
+  { name: "Next.js", tier: 3 },
   { name: "Python", tier: 3 },
+  { name: "Supabase", tier: 3 },
 ];
 
 const TechStackSection = () => (
@@ -42,7 +47,7 @@ const TechStackSection = () => (
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            transition={{ duration: 0.5, delay: i * 0.04 }}
             className="floating"
             style={{ animationDelay: `${i * 0.5}s` }}
           >
