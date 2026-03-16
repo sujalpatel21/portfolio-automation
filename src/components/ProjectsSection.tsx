@@ -2,6 +2,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowUpRight, Bot, Mic, MessageCircle, User, BookOpen, BarChart3, Workflow, Zap } from "lucide-react";
 
+import imgLeadGen from "@/assets/project-lead-gen.jpg";
+import imgVoiceAI from "@/assets/project-voice-ai.jpg";
+import imgWhatsapp from "@/assets/project-whatsapp.jpg";
+import imgAvatar from "@/assets/project-avatar.jpg";
+import imgRag from "@/assets/project-rag.jpg";
+import imgMetapulse from "@/assets/project-metapulse.jpg";
+import imgAgentic from "@/assets/project-agentic.jpg";
+import imgCreative from "@/assets/project-creative.jpg";
+
 const projects = [
   {
     title: "AI Lead Generation System",
@@ -11,6 +20,7 @@ const projects = [
     gradient: "from-primary to-secondary",
     accent: "primary",
     icon: Zap,
+    image: imgLeadGen,
   },
   {
     title: "Voice AI Agent",
@@ -20,6 +30,7 @@ const projects = [
     gradient: "from-secondary to-accent",
     accent: "secondary",
     icon: Mic,
+    image: imgVoiceAI,
   },
   {
     title: "WhatsApp Automation System",
@@ -29,6 +40,7 @@ const projects = [
     gradient: "from-accent to-primary",
     accent: "accent",
     icon: MessageCircle,
+    image: imgWhatsapp,
   },
   {
     title: "Real-Time AI Avatar",
@@ -38,6 +50,7 @@ const projects = [
     gradient: "from-primary to-accent",
     accent: "primary",
     icon: User,
+    image: imgAvatar,
   },
   {
     title: "RAG Knowledge Chatbot",
@@ -47,6 +60,7 @@ const projects = [
     gradient: "from-secondary to-primary",
     accent: "secondary",
     icon: BookOpen,
+    image: imgRag,
   },
   {
     title: "MetaPulse AI",
@@ -56,6 +70,7 @@ const projects = [
     gradient: "from-accent to-secondary",
     accent: "accent",
     icon: BarChart3,
+    image: imgMetapulse,
   },
   {
     title: "Meta Ads Agentic Workflow",
@@ -65,6 +80,7 @@ const projects = [
     gradient: "from-primary to-secondary",
     accent: "primary",
     icon: Workflow,
+    image: imgAgentic,
   },
   {
     title: "AI Creative Intelligence",
@@ -74,6 +90,7 @@ const projects = [
     gradient: "from-secondary to-accent",
     accent: "secondary",
     icon: Bot,
+    image: imgCreative,
   },
 ];
 
@@ -103,51 +120,58 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       onMouseLeave={() => { setIsHovered(false); setMousePos({ x: 0, y: 0 }); }}
     >
       <div
-        className="glass-card gradient-border p-8 h-full transition-all duration-500 relative overflow-hidden"
+        className="glass-card gradient-border h-full transition-all duration-500 relative overflow-hidden"
         style={{
           transform: isHovered ? `perspective(800px) rotateY(${mousePos.x * 0.4}deg) rotateX(${-mousePos.y * 0.4}deg) translateZ(10px)` : "none",
         }}
       >
         {isHovered && (
           <div
-            className="absolute inset-0 pointer-events-none opacity-20 transition-opacity duration-500"
+            className="absolute inset-0 pointer-events-none opacity-20 transition-opacity duration-500 z-10"
             style={{
               background: `radial-gradient(300px circle at ${50 + mousePos.x * 5}% ${50 + mousePos.y * 5}%, hsl(var(--${project.accent})), transparent 60%)`,
             }}
           />
         )}
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
-                <Icon className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase bg-gradient-to-r ${project.gradient} text-primary-foreground`}>
-                AI System
-              </div>
+        {/* Project Image */}
+        <div className="relative w-full h-48 overflow-hidden">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
+          <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
+            <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${project.gradient} flex items-center justify-center shadow-lg`}>
+              <Icon className="w-4 h-4 text-primary-foreground" />
             </div>
-            <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors" />
+            <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase bg-gradient-to-r ${project.gradient} text-primary-foreground shadow-lg`}>
+              AI System
+            </div>
           </div>
+          <ArrowUpRight className="absolute top-3 right-3 w-4 h-4 text-foreground/70 group-hover:text-accent transition-colors z-10" />
+        </div>
 
-          <h3 className="text-2xl font-bold font-heading mb-3 group-hover:gradient-text transition-all duration-300">{project.title}</h3>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.description}</p>
+        <div className="relative z-10 p-6 pt-2">
+          <h3 className="text-xl font-bold font-heading mb-2 group-hover:gradient-text transition-all duration-300">{project.title}</h3>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-5">{project.description}</p>
 
-          <div className="mb-6">
-            <div className="text-[10px] font-medium text-foreground/60 uppercase tracking-widest mb-3">Key Features</div>
-            <ul className="space-y-2">
+          <div className="mb-5">
+            <div className="text-[10px] font-medium text-foreground/60 uppercase tracking-widest mb-2">Key Features</div>
+            <ul className="space-y-1.5">
               {project.features.map((f) => (
-                <li key={f} className="text-xs text-muted-foreground flex items-center gap-2.5">
-                  <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${project.gradient}`} />
+                <li key={f} className="text-xs text-muted-foreground flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${project.gradient} shrink-0`} />
                   {f}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-4 border-t border-border/30">
+          <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/30">
             {project.stack.map((tech) => (
-              <span key={tech} className="text-[10px] px-3 py-1.5 rounded-full bg-muted/40 text-muted-foreground border border-border/40 font-medium">
+              <span key={tech} className="text-[10px] px-2.5 py-1 rounded-full bg-muted/40 text-muted-foreground border border-border/40 font-medium">
                 {tech}
               </span>
             ))}
