@@ -23,9 +23,6 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="hover:opacity-80 transition-opacity flex items-center">
-          <img src={spLogo} alt="Sujal Patel" className="h-8 w-auto" />
-        </a>
         <div className="hidden md:flex items-center gap-1">
           {["Ecosystem", "Projects", "Workflow", "Contact"].map((item) => (
             <a
@@ -37,12 +34,17 @@ const Navbar = () => {
             </a>
           ))}
         </div>
-        <a
-          href="#contact"
-          className="px-5 py-2 rounded-lg text-xs font-heading font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
-        >
-          Get in Touch
-        </a>
+        <div className="flex items-center gap-4">
+          <a
+            href="#contact"
+            className="px-5 py-2 rounded-lg text-xs font-heading font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
+          >
+            Get in Touch
+          </a>
+          <a href="#" className="hover:opacity-80 transition-opacity flex items-center">
+            <img src={spLogo} alt="Sujal Patel" className="h-8 w-auto" />
+          </a>
+        </div>
       </div>
     </motion.nav>
   );
