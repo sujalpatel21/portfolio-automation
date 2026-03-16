@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import spLogo from "@/assets/sp-logo.png";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillEcosystem from "@/components/SkillEcosystem";
@@ -32,16 +33,14 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-border/20 py-10">
         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-heading font-bold text-lg gradient-text">SP</span>
+          <img src={spLogo} alt="Sujal Patel" className="h-7 w-auto" />
           <div className="text-xs text-muted-foreground">
             © 2026 Sujal Patel. Building autonomous AI systems.
           </div>
           <div className="flex gap-6">
-            {["Email", "LinkedIn", "GitHub"].map((link) => (
-              <a key={link} href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                {link}
-              </a>
-            ))}
+            <a href="mailto:sujalpatel6172@gmail.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors">Email</a>
+            <a href="https://www.linkedin.com/in/sujalpatel6172" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors">LinkedIn</a>
+            <a href="https://github.com/sujalpatel21" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors">GitHub</a>
           </div>
         </div>
       </footer>

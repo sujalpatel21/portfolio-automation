@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, ArrowUpRight } from "lucide-react";
 
 const links = [
-  { label: "Email", href: "mailto:hello@sujalpatel.com", icon: Mail },
-  { label: "LinkedIn", href: "#", icon: Linkedin },
-  { label: "GitHub", href: "#", icon: Github },
+  { label: "Email", href: "mailto:sujalpatel6172@gmail.com", icon: Mail },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sujalpatel6172", icon: Linkedin },
+  { label: "GitHub", href: "https://github.com/sujalpatel21", icon: Github },
 ];
 
 const ContactSection = () => (
@@ -37,6 +37,8 @@ const ContactSection = () => (
               <a
                 key={link.label}
                 href={link.href}
+                target={link.label !== "Email" ? "_blank" : undefined}
+                rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
                 className="group glass-card px-6 py-4 flex items-center gap-3 text-sm font-heading hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_-10px_hsl(220,100%,65%,0.2)]"
               >
                 <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -48,7 +50,7 @@ const ContactSection = () => (
         </div>
 
         <a
-          href="mailto:hello@sujalpatel.com"
+          href="mailto:sujalpatel6172@gmail.com"
           className="group inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-primary-foreground font-medium font-heading tracking-wide transition-all duration-300 glow-primary hover:shadow-[0_0_60px_-10px_hsl(220,100%,65%,0.5)]"
         >
           Start a Conversation

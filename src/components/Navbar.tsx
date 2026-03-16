@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import spLogo from "@/assets/sp-logo.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -22,8 +23,8 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="font-heading font-bold text-xl gradient-text hover:opacity-80 transition-opacity">
-          SP
+        <a href="#" className="hover:opacity-80 transition-opacity flex items-center">
+          <img src={spLogo} alt="Sujal Patel" className="h-8 w-auto" />
         </a>
         <div className="hidden md:flex items-center gap-1">
           {["Ecosystem", "Projects", "Workflow", "Contact"].map((item) => (
