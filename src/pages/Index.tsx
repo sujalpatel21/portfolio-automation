@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import spLogo from "@/assets/sp-logo.png";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillEcosystem from "@/components/SkillEcosystem";
