@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, ArrowUpRight } from "lucide-react";
+import ContactFormDialog from "./ContactFormDialog";
 
 const links = [
   { label: "Email", href: "mailto:sujalpatel6172@gmail.com", icon: Mail },
@@ -49,13 +50,15 @@ const ContactSection = () => (
           })}
         </div>
 
-        <a
-          href="mailto:sujalpatel6172@gmail.com"
-          className="group inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-primary-foreground font-medium font-heading tracking-wide transition-all duration-300 glow-primary hover:shadow-[0_0_60px_-10px_hsl(220,100%,65%,0.5)]"
-        >
-          Start a Conversation
-          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
+        <ContactFormDialog>
+          <button
+            type="button"
+            className="group inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-primary-foreground font-medium font-heading tracking-wide transition-all duration-300 glow-primary hover:shadow-[0_0_60px_-10px_hsl(220,100%,65%,0.5)]"
+          >
+            Start a Conversation
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
+        </ContactFormDialog>
       </motion.div>
     </div>
   </section>
