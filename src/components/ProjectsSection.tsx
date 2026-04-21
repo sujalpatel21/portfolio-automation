@@ -244,6 +244,43 @@ const ProjectChapter = ({
 };
 
 const ProjectsSection = () => {
+  // Local progress dot using safe clamped offsets
+  return <ProjectsSectionInner />;
+};
+
+const ProgressDot = ({
+  project,
+  index,
+  total,
+  progress,
+}: {
+  project: Project;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) => {
+  const slice = 1 / total;
+  const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+  const a = clamp01(index * slice - slice * 0.3);
+  const b = clamp01(index * slice);
+  const c = clamp01((index + 1) * slice);
+  const d = clamp01((index + 1) * slice + slice * 0.3);
+  const stops: [number, number, number, number] = [a, b, c, d];
+  for (let i = 1; i < stops.length; i++) {
+    if (stops[i] <= stops[i - 1]) stops[i] = Math.min(1, stops[i - 1] + 0.0001);
+  }
+  const opacity = useTransform(progress, stops, [0.3, 1, 1, 0.3]);
+  const scale = useTransform(progress, stops, [1, 1.4, 1.4, 1]);
+  return (
+    <motion.div
+      style={{ opacity, scale }}
+      className={`w-2 h-2 rounded-full bg-gradient-to-br ${project.gradient}`}
+      title={project.subtitle}
+    />
+  );
+};
+
+const ProjectsSectionInner = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
