@@ -13,7 +13,7 @@ const ContactFormDialog = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,11 +25,10 @@ const ContactFormDialog = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     try {
       const formData = new FormData();
-      // Generic Google Form entries — submit via no-cors so request fires even if entry IDs differ
-      formData.append("entry.name", form.name);
-      formData.append("entry.email", form.email);
-      formData.append("entry.subject", form.subject);
-      formData.append("entry.message", form.message);
+      formData.append("entry.1864024854", form.name);
+      formData.append("entry.1707729289", form.email);
+      formData.append("entry.1250199395", form.phone);
+      formData.append("entry.726786283", form.message);
 
       await fetch(FORM_ACTION, { method: "POST", mode: "no-cors", body: formData });
 
@@ -38,7 +37,7 @@ const ContactFormDialog = ({ children }: { children: ReactNode }) => {
       setTimeout(() => {
         setOpen(false);
         setSubmitted(false);
-        setForm({ name: "", email: "", subject: "", message: "" });
+        setForm({ name: "", email: "", phone: "", message: "" });
       }, 1800);
     } catch {
       toast({ title: "Something went wrong", description: "Please email me directly.", variant: "destructive" });
@@ -115,13 +114,13 @@ const ContactFormDialog = ({ children }: { children: ReactNode }) => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground tracking-wide">Subject</label>
+                <label className="text-xs font-medium text-muted-foreground tracking-wide">Phone</label>
                 <Input
-                  name="subject"
-                  value={form.subject}
+                  name="phone"
+                  type="tel"
+                  value={form.phone}
                   onChange={handleChange}
-                  required
-                  placeholder="AI automation, chatbot, ads…"
+                  placeholder="+1 555 000 0000"
                   className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary/50"
                 />
               </div>
