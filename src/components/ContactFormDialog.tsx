@@ -114,13 +114,13 @@ const ContactFormDialog = ({ children }: { children: ReactNode }) => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-muted-foreground tracking-wide">Subject</label>
+                <label className="text-xs font-medium text-muted-foreground tracking-wide">Phone</label>
                 <Input
-                  name="subject"
-                  value={form.subject}
+                  name="phone"
+                  type="tel"
+                  value={form.phone}
                   onChange={handleChange}
-                  required
-                  placeholder="AI automation, chatbot, ads…"
+                  placeholder="+1 555 000 0000"
                   className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary/50"
                 />
               </div>
