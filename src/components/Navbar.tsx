@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import spLogo from "@/assets/sp-logo.png";
+import ContactFormDialog from "./ContactFormDialog";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -36,12 +37,14 @@ const Navbar = () => {
           ))}
         </div>
         <div className="flex items-center gap-4">
-          <a
-            href="#contact"
-            className="px-5 py-2 rounded-lg text-xs font-heading font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
-          >
-            Get in Touch
-          </a>
+          <ContactFormDialog>
+            <button
+              type="button"
+              className="px-5 py-2 rounded-lg text-xs font-heading font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
+            >
+              Get in Touch
+            </button>
+          </ContactFormDialog>
           <a href="#" className="hover:opacity-80 transition-opacity flex items-center">
             <img src={spLogo} alt="Sujal Patel" className="h-8 w-auto" />
           </a>
