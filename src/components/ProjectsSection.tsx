@@ -124,24 +124,32 @@ const ProjectChapter = ({
   total: number;
   progress: MotionValue<number>;
 }) => {
-  // Each chapter occupies a slice of the scroll progress
+  // Each chapter occupies a slice of the scroll progress.
+  // Offsets MUST be monotonically increasing AND within [0, 1].
   const slice = 1 / total;
-  const start = index * slice;
-  const end = start + slice;
+  const rawStart = index * slice;
+  const rawEnd = rawStart + slice;
+  const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+  const enter = clamp01(rawStart - slice * 0.5);
+  const start = clamp01(rawStart);
+  const end = clamp01(rawEnd);
+  const exit = clamp01(rawEnd + slice * 0.5);
 
-  // Enter: from (start - 0.5*slice) to start. Active: start to end. Exit: end to (end + 0.5*slice)
-  const opacity = useTransform(
-    progress,
-    [start - slice * 0.5, start, end, end + slice * 0.5],
-    [0, 1, 1, 0.3],
-  );
-  const y = useTransform(progress, [start - slice * 0.5, start, end, end + slice * 0.5], [80, 0, 0, -40]);
-  const scale = useTransform(
-    progress,
-    [start - slice * 0.5, start, end, end + slice * 0.5],
-    [0.95, 1, 1, 0.9],
-  );
-  const blur = useTransform(progress, [end, end + slice * 0.5], [0, 6]);
+  // Build a strictly non-decreasing stops array, deduping equal neighbors
+  const buildStops = (a: number, b: number, c: number, d: number) => {
+    const stops = [a, b, c, d];
+    for (let i = 1; i < stops.length; i++) {
+      if (stops[i] <= stops[i - 1]) stops[i] = Math.min(1, stops[i - 1] + 0.0001);
+    }
+    return stops as [number, number, number, number];
+  };
+  const stops = buildStops(enter, start, end, exit);
+
+  const opacity = useTransform(progress, stops, [0, 1, 1, 0.3]);
+  const y = useTransform(progress, stops, [80, 0, 0, -40]);
+  const scale = useTransform(progress, stops, [0.95, 1, 1, 0.9]);
+  const blurStops = stops[2] < stops[3] ? [stops[2], stops[3]] : [stops[2], Math.min(1, stops[2] + 0.0001)];
+  const blur = useTransform(progress, blurStops, [0, 6]);
   const filter = useTransform(blur, (b) => `blur(${b}px)`);
 
   const Icon = project.icon;
@@ -300,21 +308,15 @@ const ProjectsSection = () => {
 
         {/* Progress indicator */}
         <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col gap-3">
-          {projects.map((p, i) => {
-            const slice = 1 / projects.length;
-            const start = i * slice;
-            const end = start + slice;
-            const opacity = useTransform(scrollYProgress, [start - slice * 0.3, start, end, end + slice * 0.3], [0.3, 1, 1, 0.3]);
-            const scale = useTransform(scrollYProgress, [start - slice * 0.3, start, end, end + slice * 0.3], [1, 1.4, 1.4, 1]);
-            return (
-              <motion.div
-                key={p.title}
-                style={{ opacity, scale }}
-                className={`w-2 h-2 rounded-full bg-gradient-to-br ${p.gradient}`}
-                title={p.subtitle}
-              />
-            );
-          })}
+          {projects.map((p, i) => (
+            <ProgressDot
+              key={p.title}
+              project={p}
+              index={i}
+              total={projects.length}
+              progress={scrollYProgress}
+            />
+          ))}
         </div>
       </div>
     </section>
