@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import { Bot, Workflow, Mic, Database, Brain, Link2, BookOpen, Sparkles } from "lucide-react";
 
 type Layer = {
