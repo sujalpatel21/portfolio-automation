@@ -228,11 +228,10 @@ const SkillEcosystem = () => {
                       return (
                         <motion.button
                           key={key}
-                          custom={ci}
-                          variants={cardReveal}
-                          initial="hidden"
-                          whileInView="visible"
+                          initial={{ opacity: 0, y: 18 }}
+                          whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, margin: "-40px" }}
+                          transition={{ delay: ci * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
                           onMouseEnter={() => setActive(key)}
                           onFocus={() => setActive(key)}
                           className={`relative text-left p-5 rounded-xl border transition-all duration-300 ${
