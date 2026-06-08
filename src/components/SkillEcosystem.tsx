@@ -98,8 +98,26 @@ const layers: Layer[] = [
   },
 ];
 
+const cardReveal = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
 const SkillEcosystem = () => {
   const [active, setActive] = useState<string>("04-Voice AI");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.9", "end 0.1"],
+  });
+
+  const spineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const spineGlowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.8, 0.3]);
 
   return (
     <section id="ecosystem" className="py-32 relative overflow-hidden">
@@ -113,6 +131,7 @@ const SkillEcosystem = () => {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl mb-20"
         >
           <div className="flex items-center gap-3 mb-6">
@@ -131,9 +150,20 @@ const SkillEcosystem = () => {
         </motion.div>
 
         {/* Layered architecture */}
-        <div className="relative max-w-6xl mx-auto">
-          {/* Vertical spine */}
-          <div className="absolute left-[60px] md:left-[88px] top-6 bottom-6 w-px bg-gradient-to-b from-transparent via-border to-transparent hidden sm:block" />
+        <div ref={containerRef} className="relative max-w-6xl mx-auto">
+          {/* Vertical spine track */}
+          <div className="absolute left-[60px] md:left-[88px] top-6 bottom-6 w-px bg-gradient-to-b from-transparent via-border/40 to-transparent hidden sm:block" />
+
+          {/* Scroll-driven spine fill */}
+          <motion.div
+            className="absolute left-[60px] md:left-[88px] top-6 w-px hidden sm:block origin-top"
+            style={{
+              height: spineHeight,
+              background: "linear-gradient(180deg, transparent, hsl(var(--primary)) 20%, hsl(var(--secondary)) 80%, transparent)",
+              opacity: spineGlowOpacity,
+              filter: "blur(1px)",
+            }}
+          />
 
           <div className="space-y-6">
             {layers.map((layer, li) => (
@@ -145,20 +175,49 @@ const SkillEcosystem = () => {
                 transition={{ duration: 0.6, delay: li * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="relative grid grid-cols-1 sm:grid-cols-[120px_1fr] md:grid-cols-[176px_1fr] gap-6 md:gap-10 items-start"
               >
-                {/* Layer label */}
-                <div className="relative">
+                {/* Layer label + spine node */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.5, delay: li * 0.08 + 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative"
+                >
                   <div className="hidden sm:block absolute left-[28px] md:left-[56px] top-7 w-8 h-px bg-border" />
-                  <div className="hidden sm:flex absolute left-[60px] md:left-[88px] top-5 -translate-x-1/2 w-4 h-4 rounded-full border border-primary/50 bg-background items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  </div>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 15,
+                      delay: li * 0.08 + 0.25,
+                    }}
+                    className="hidden sm:flex absolute left-[60px] md:left-[88px] top-5 -translate-x-1/2 w-5 h-5 rounded-full border-2 border-primary bg-background items-center justify-center z-10"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true, margin: "-80px" }}
+                      transition={{ delay: li * 0.08 + 0.35 }}
+                      className="w-2 h-2 rounded-full bg-primary"
+                    />
+                  </motion.div>
                   <div className="text-[10px] font-mono tracking-widest text-muted-foreground mb-1">
                     LAYER / {layer.index}
                   </div>
                   <div className="text-sm font-medium text-foreground">{layer.tier}</div>
-                </div>
+                </motion.div>
 
                 {/* Layer card */}
-                <div className="relative rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm p-6 md:p-8 overflow-hidden group hover:border-border transition-colors duration-500">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, delay: li * 0.08 + 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm p-6 md:p-8 overflow-hidden group hover:border-border transition-colors duration-500"
+                >
                   {/* subtle corner gradient */}
                   <div className="absolute -top-px -right-px w-40 h-40 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none" />
 
@@ -171,13 +230,18 @@ const SkillEcosystem = () => {
                   <p className="text-sm text-muted-foreground mb-6 max-w-xl">{layer.caption}</p>
 
                   <div className="grid sm:grid-cols-2 gap-3">
-                    {layer.capabilities.map((cap) => {
+                    {layer.capabilities.map((cap, ci) => {
                       const key = `${layer.index}-${cap.label}`;
                       const isActive = active === key;
                       const Icon = cap.icon;
                       return (
-                        <button
+                        <motion.button
                           key={key}
+                          custom={ci}
+                          variants={cardReveal}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true, margin: "-40px" }}
                           onMouseEnter={() => setActive(key)}
                           onFocus={() => setActive(key)}
                           className={`relative text-left p-5 rounded-xl border transition-all duration-300 ${
@@ -221,11 +285,11 @@ const SkillEcosystem = () => {
                               </span>
                             ))}
                           </div>
-                        </button>
+                        </motion.button>
                       );
                     })}
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
