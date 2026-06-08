@@ -98,15 +98,6 @@ const layers: Layer[] = [
   },
 ];
 
-const cardReveal = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
-
 const SkillEcosystem = () => {
   const [active, setActive] = useState<string>("04-Voice AI");
   const containerRef = useRef<HTMLDivElement>(null);
